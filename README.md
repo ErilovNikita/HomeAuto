@@ -1,0 +1,2 @@
+# HomeAuto
+My Home Automatization
