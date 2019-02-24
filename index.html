@@ -1,0 +1,141 @@
+<html lang="en" dir="ltr" class="bg-light fontawesome-i2svg-active fontawesome-i2svg-complete"><head>
+    <meta charset="utf-8">
+    <title>Smart Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/FontAwesome.js"></script>
+    <!-- <script src="js/Cryptojs.js"></script> -->
+    <link rel="shortcut icon" href="icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="icon.png">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/chartist.css">
+    <script src="js/chartist.js"></script>
+  </head>
+  <body class="bg-light">
+    <div id="not"></div>
+
+<!-- Modal -->
+    <div class="modal fade" id="ip-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="rounded shadow-sm modal-content">
+          <div class="modal-header pb-0">
+            <h5 class="modal-title" id="exampleModalLabel">IP Static</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group list-group-flush" id="ipList">
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-scroller bg-white shadow-sm">
+      <nav class="nav nav-underline" id="link-on-bar">
+        <a class="nav-link active" href="index.php">Home Server</a>
+        <a class="nav-link" href="http://178.45.94.167:8888">Homebridge</a>
+        <a class="nav-link" href="ssh://erilovnikita@178.45.94.167">SSH</a>
+        <a class="nav-link" href="smb://erilovnikita@178.45.94.167">Samba</a>
+        <a class="nav-link" data-toggle="modal" data-target="#ip-modal" href="">IP Static<span id="ipLength" class="ml-1 badge badge-pill bg-light align-text-bottom">67</span></a>
+        <a class="nav-link" href="http://178.45.94.167:1880">Node Red</a>
+        <a class="nav-link" href="http://178.45.94.167/phpMyAdmin/">phpMyAdmin</a>
+        <a class="nav-link" href="http://transmission:transmission@178.45.94.167:9091">Transmission</a>
+      </nav>
+    </div>
+    <main role="main" class="container">
+      <div class="d-flex align-items-center p-4 my-4 text-white-50 bg-purple rounded shadow-sm">
+        <div class="lh-100">
+          <h6 class="mb-1 text-white lh-100">Последний IP:</h6>
+          <small id="first-ip"></small>
+        </div>
+      </div>
+      <div id="ip-block" class="mb-4 p-4 bg-white rounded shadow-sm">
+        <h6 class="pb-2 mb-0">Обновления IP</h6>
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark"></strong>
+          </p>
+        </div>
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark"></strong>
+          </p>
+        </div>
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark"></strong>
+          </p>
+        </div>
+        <small class="d-block text-right mt-3">
+          <a href="/ip">Смотреть все</a>
+        </small>
+      </div>
+      <div id="memory" class="mb-4 p-4 bg-white rounded shadow-sm">
+        <h6 class="pb-2 mb-0">Память</h6>
+        <div class="row">
+          <div class="text-muted pt-3 col-md-6">
+            <p><strong>Встроенная память</strong></p>
+            <span class="all rom">
+              <span id="rom_proc" class="fill"></span>
+            </span>
+            <small id="rom_fill"></small> <small>из</small> <small id="rom_full"></small><small> занято</small>
+          </div>
+          <div class="text-muted pt-3 col-md-6">
+            <p><strong>Оперативная память</strong></p>
+            <span class="all ram --light">
+              <span id="ram_proc" class="fill"></span>
+            </span>
+            <small id="ram_fill"></small> <small>из</small> <small id="ram_full"></small><small> занято</small>
+          </div>
+        </div>
+      </div>
+      <div id="mqtt-device" class="row">
+        <div class="col-md-3 col-6 mb-4 mqtt sonoff_top on">
+          <div class="pt-5 pb-5 text-center bg-white rounded shadow-sm">
+            <i class="far fa-3x fa-lightbulb"></i>
+            <h6 class="mt-3 mb-0"><b>Свет (Потолок)</b></h6>
+            <p class="state m-0 p-0 text-muted">Выключен</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4 mqtt sonoffpbasic on">
+          <div class="pt-5 pb-5 text-center bg-white rounded shadow-sm">
+            <i class="fab fa-3x fa-flickr"></i>
+            <h6 class="mt-3 mb-0"><b>Розетка под столом</b></h6>
+            <p class="state m-0 p-0 text-muted">Выключен</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-12 mb-4">
+          <div class="pt-4 pb-1 text-center bg-white rounded shadow-sm">
+            <h6 class="mb-2">
+              <i class="fa fa-tint"></i>
+                Влажность
+            </h6>
+            <h3><b id="secondHum"></b></h3>
+            <p class="text-muted">Моя комната</p>
+            <div class="ct-chart ct-hum ct-perfect-fourth"></div>
+          </div>
+        </div>
+        <div class="col-md-3 col-12 mb-4">
+          <div class="pt-4 pb-1 text-center bg-white rounded shadow-sm">
+            <h6 class="mb-2">
+              <i class="fa fa-thermometer-quarter"></i>
+                Температура
+            </h6>
+            <h3><b id="secondTemp"></b></h3>
+            <p class="text-muted">Моя комната</p>
+            <div class="ct-chart ct-temp ct-perfect-fourth"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="js/spa.js"></script>
+  </body>
+</html>
