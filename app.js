@@ -19,7 +19,7 @@ var homeSQL = mysql.createConnection({
   host     : 'host',
   user     : 'user',
   password : 'pass',
-  database : 'base
+  database : 'base'
 });
 var hostingSQL = mysql.createConnection({
   host     : 'host',
